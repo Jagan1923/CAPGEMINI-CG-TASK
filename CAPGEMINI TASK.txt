@@ -1,0 +1,397 @@
+TASK 1
+
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ConsoleApp12
+{
+    class Student
+    {
+        public string firstname { get; set; }
+        public string lastname { get; set; }
+        public string smailid { get; set; }
+        public string branch { get; set; }
+        public double per { get; set; }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+
+            List<Student> st = new List<Student>()
+        {
+        new Student {firstname="ajay",lastname="kumar",
+            smailid="ajkumar123@gmail.com",branch="ece",per=72},
+        new Student {firstname="arul",lastname="prasad",
+            smailid="arul113@gmail.com",branch="it",per=92},
+        new Student {firstname="balaji",lastname="r",
+            smailid="bala99@gmail.com",branch="ece",per=66},
+        new Student {firstname="bhavan",lastname="krish",
+            smailid="bhkrish01@gmail.com",branch="eee",per=88},
+        new Student {firstname="dinesh",lastname="kumar",
+            smailid="dkdinesh22@gmail.com",branch="it",per=90},
+        new Student {firstname="guru",lastname="prasanna",
+            smailid="gurugp@gmail.com",branch="cs",per=80},
+        new Student {firstname="harini",lastname="venkat",
+            smailid="harini03@gmail.com",branch="eee",per=95},
+        new Student {firstname="jeeva",lastname="aj",
+            smailid="jeeva55@gmail.com",branch="it",per=74},
+        new Student {firstname="kavi",lastname="priya",
+            smailid="kavikp@gmail.com",branch="cs",per=90},
+        new Student {firstname="lokesh",lastname="kannan",
+            smailid="lokesh23@gmail.com",branch="ece",per=86} };
+
+            Student Std = new Student();
+
+            Console.WriteLine("********  Select  ********");
+            //var query1 = from i in st select i;
+            var query1 = st.Select(i => i);
+            foreach(var i in query1)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + "LastName=" + i.lastname + "SmailId=" + i.smailid + "Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("*******  Where  *********");
+            var query2=st.Select(i=>i).Where(i=>i.per<80);
+            foreach (var i in query2)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + "LastName=" + i.lastname + "SmailId=" + i.smailid + "Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("*******  Take  *********");
+            var query3 = st.Select(i => i).Where(i => i.per > 50).Take(3);
+            foreach (var i in query3)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + "LastName=" + i.lastname + "SmailId=" + i.smailid + "Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("********  TakeWhile  ********");
+            var query4 = st.TakeWhile(i => i.per > 50);
+            foreach (var i in query4)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + "LastName=" + i.lastname + "SmailId=" + i.smailid + "Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("********  Skip  ********");
+            var query5 = st.Select(i => i).Where(i => i.per > 40).Skip(2);
+            foreach (var i in query5)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + "LastName=" + i.lastname + "SmailId=" + i.smailid + "Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("*******  SkipWhile  *********");
+            var query6 = (from i in st select i).SkipWhile(i => i.per > 50);
+            foreach (var i in query6)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + "LastName=" + i.lastname + "SmailId=" + i.smailid + "Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("********  Ascending  ********");
+            var query7 = from i in st orderby i.per ascending select i;
+            foreach (var i in query7)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + "LastName=" + i.lastname + "SmailId=" + i.smailid + "Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("********  Descending  *********");
+            var query8 = from i in st orderby i.per descending select i;
+            foreach (var i in query8)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + "LastName=" + i.lastname + "SmailId=" + i.smailid + "Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("********  GroupBy  *********");
+            var query9 = st.Select(i => i).GroupBy(i => i.branch);
+            foreach (var i in query9)
+            {
+                Console.WriteLine("     ");
+                Console.WriteLine(i.Key);                
+                foreach (var j in i)
+                {
+                    Console.WriteLine(j.firstname);
+                }
+            }
+
+            Console.WriteLine("********  Select  *********");
+            var query10 = from i in st select new { i.firstname, i.lastname, i.branch };
+            foreach(var i in query10)
+            {
+                Console.WriteLine(i);
+            }
+            List <List< int >>arr =new List<List<int>> ();
+            List<int> arr1 = new List<int> { 23, 24, 20,30 };
+            arr.Add(arr1);
+            Console.WriteLine("********  SelectMany  *********");
+            var query11 = arr.SelectMany(i=>i);
+            foreach (var i in query11) 
+            {
+                Console.WriteLine(i);
+            }
+
+            Console.WriteLine("*******  Aggregate  **********");
+            int[] arr5 = new int[] { 1, 5, 6, 8, 9, 6, 10, 7, 8, 5 };
+            var query12 = arr5.Select(i => i).Count();
+            Console.WriteLine("count=" + query12);
+
+            var query13 = arr5.Select(i => i).Max();
+            Console.WriteLine("Max value=" + query13);
+
+            var query14 = arr5.Select(i => i).Min();
+            Console.WriteLine("Min value=" + query14);
+
+            var query15 = arr5.Select(i => i).Average();
+            Console.WriteLine("Average=" + query15);
+
+            var query16 = arr5.Select(i => i).Sum();
+            Console.WriteLine("Sum=" + query16);
+
+
+            Console.WriteLine("*********  Distinct element  ************");
+            var query17 = arr.Select(i => i).Distinct();
+            Console.WriteLine("Distinct elements");
+            foreach (var i in query17)
+            {
+                Console.WriteLine(i);
+            }
+
+
+           
+          Console.WriteLine("**********  Let  ***********");
+            int[] arr2 = new int[] { 1, 5, 6, 8, 9, 6, 10, 7, 8, 5 };
+            var query18 = from i in arr2 let result = i + 10 select result;
+            foreach (var i in query18)
+            {
+                Console.WriteLine(i);
+            }
+
+
+            Console.WriteLine("***********  Into  ***********");
+            var query19 = from i in st where i.branch == "it" select i into result where result.per > 75 select result;
+            foreach (var i in query19)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + " LastName="
+                    + i.lastname + " SmailId=" + i.smailid + " Branch=" + i.branch + "Per=" + i.per);
+            }
+
+
+            Console.WriteLine("***********  oftype() int  **********");
+            object[] arr3 = new object[] { "Java", 1, "Python", 2, ".Net", 3, "JScript", 4, "HTML", 60, 85, 76 };
+            var query20 = (from i in arr3 select i).OfType<int>();
+            foreach (var i in query20)
+            {
+                Console.WriteLine(i);
+            }
+
+
+            Console.WriteLine("***********  Oftype() string  ************");
+            var query21 = (from i in arr3 select i).OfType<string>();
+            foreach (var i in query21)
+            {
+                Console.WriteLine(i);
+            }
+
+
+            Console.WriteLine("*********  First  *********");
+            var query22 = st.Where(i => i.per >70).Select(i=>i.firstname).First();
+            Console.WriteLine(query22);
+
+            Console.WriteLine("*********  Last  *********");
+            var query23 = st.Where(i => i.per > 50).Select(i => i.firstname).Last();
+            Console.WriteLine(query23);
+
+            Console.WriteLine("*********  First or Default  *********");
+            var query24 = st.Where(i => i.per > 50).Select(i => i.firstname).FirstOrDefault();
+            Console.WriteLine(query24);
+
+            Console.WriteLine("*********  Last or Default  *********");
+            var query25 = st.Where(i => i.per > 50).Select(i => i.firstname).LastOrDefault();
+            Console.WriteLine(query25);
+
+            Console.WriteLine("*********  Single  *********");
+            int[] arr4 = new int[] { 1, 5, 6, 8, 9, 6, 10, 7, 8, 5, 3 };
+            var query26 = arr4.Where(i => i == 3).Select(i => i).Single();
+            Console.WriteLine(query26);
+
+            Console.WriteLine("*********  Single or Default  *********");
+            var query27 = arr4.Where(i => i == 50).Select(i => i).SingleOrDefault();
+            Console.WriteLine(query27);
+
+            Console.WriteLine("*********  Deffered Execution  *********");
+            var query28 = from i in st select i;
+            st.Add(new Student() { firstname = "abc", lastname = "d", smailid = "ab12@gmail.com", branch = "ece", per = 98 });
+            st.Add(new Student() { firstname = "xyz", lastname = "e", smailid = "xyz@gmail.com", branch = "it", per = 89 });
+            foreach(var i in query28)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + " LastName="
+                    + i.lastname + " SmailId=" + i.smailid + " Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("*********  Immediate Execution  *********");
+            var query29 = (from i in st select i).Count();
+            st.Add(new Student() { firstname = "aaa", lastname = "bbb", smailid = "abab@gmail.com", branch = "eee", per = 88 });
+            Console.WriteLine(query29);
+            foreach(var i in query28)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + " LastName="
+                    + i.lastname + " SmailId=" + i.smailid + " Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("*********  Starts With  *********");
+            var query30 = st.Where(i => i.firstname.StartsWith('a'));
+            foreach (var i in query30)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + " LastName="
+                    + i.lastname + " SmailId=" + i.smailid + " Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("*********  Ends With  *********");
+            var query31 = st.Where(i => i.lastname.EndsWith('r'));
+            foreach (var i in query31)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + " LastName="
+                    + i.lastname + " SmailId=" + i.smailid + " Branch=" + i.branch + "Per=" + i.per);
+            }
+
+            Console.WriteLine("*********  Contains  *********");
+            var query32 = st.Where(i => i.firstname.Contains('a'));
+            foreach(var i in query32)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + " LastName="
+                   + i.lastname + " SmailId=" + i.smailid + " Branch=" + i.branch + "Per=" + i.per);
+            }
+            Console.WriteLine("*********  Ienumerable  *********");
+            IEnumerable<Student> query33 = from i in st select i;
+            query33 = query33.Take(2);
+            foreach(var i in query33)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + " LastName="
+                   + i.lastname + " SmailId=" + i.smailid + " Branch=" + i.branch + "Per=" + i.per);
+            }
+
+
+            Console.WriteLine("*********  IQueryable  *********");
+            IQueryable<Student> query34 = st.AsQueryable();
+
+            query34 = query34.Take(2);
+            foreach (var i in query34)
+            {
+                Console.WriteLine("FirstName=" + i.firstname + " LastName="
+                   + i.lastname + " SmailId=" + i.smailid + " Branch=" + i.branch + "Per=" + i.per);
+            }
+
+
+        }
+
+    }
+}
+
+
+
+
+TASK 2
+
+using System;
+using System.Linq;
+using System.Collections;
+using System.Collections.Generic;
+
+namespace Linq
+{
+    class Class1
+    {
+        static void Main(string[] args)
+        {
+            int[] array1 = new int[] { 100, 20, 10, 50, 60, 30, 40, 70, 80, 90 };
+            int[] array2 = new int[] { 5, 97, 50, 43, 37, 30, 80, 69, 20, 87 };
+            Console.WriteLine("------------Union-----------");
+            var query1 = (from i in array1 select i).Union(from j in array2 select j);
+
+            foreach (int i in query1)
+            {
+                Console.WriteLine(i);
+            }
+
+            Console.WriteLine("-----------Intersect------------");
+
+            var query2 = (from i in array1 select i).Intersect(from j in array2 select j);
+
+            foreach (int i in query2)
+            {
+                Console.WriteLine(i);
+            }
+
+            Console.WriteLine("------------Except-----------");
+
+            var query3 = (from i in array1 select i).Except(from j in array2 select j);
+
+            foreach (int i in query3)
+            {
+                Console.WriteLine(i);
+            }
+
+            Console.WriteLine("----------Concat-------------");
+
+            var query4 = (from i in array1 select i).Concat(from j in array2 select j);
+
+            foreach (int i in query4)
+            {
+                Console.WriteLine(i);
+            }
+
+            Console.WriteLine("");
+
+            Console.WriteLine("Aggregate Functions:");
+
+            Console.WriteLine("-----------Sum------------");
+
+           
+
+            int sum1 = (from i in array1 select i).Sum();
+            int sum2 = (from i in array2 select i).Sum();
+
+            Console.WriteLine("Total Sum of two arrays:" + (sum1 + sum2));
+
+            Console.WriteLine("----------Max-------------");
+            
+            int max1 = (from i in array1 select i).Max();
+            int max2 = (from i in array2 select i).Max();
+
+            Console.WriteLine("Maximum number in both arrays:" + (max1, max2));
+
+            Console.WriteLine("------------Min-----------");
+            
+
+            int min1 = (from i in array1 select i).Min();
+            int min2 = (from i in array2 select i).Min();
+
+            Console.WriteLine("Minimum number in both arrays:" + (min1, min2));
+
+            Console.WriteLine("-----------Avg------------");
+            
+
+            double avg1 = (from i in array1 select i).Average();
+            double avg2 = (from i in array2 select i).Average();
+
+            Console.WriteLine("Average of arrays:" + (avg1, avg2));
+
+            Console.WriteLine("-----------Count------------");
+            
+
+            int count1 = (from i in array1 select i).Count();
+            int count2 = (from i in array2 select i).Count();
+
+            Console.WriteLine("Total number of elements in two arrays:" + (count1, count2));
+            Console.WriteLine("---------Distinct-------------");
+            var query5 = (from i in query4 select i).Distinct();
+            foreach(int i in query5)
+            {
+                Console.WriteLine(i);
+            }
+
+        }
+    }
+}
